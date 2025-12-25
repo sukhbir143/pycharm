@@ -264,10 +264,7 @@ with (sync_playwright() as p):
                             print("⚠️  Could not verify filter state")
 
 
-                            class Car:
-                                def __int__(self, brand ,model):
-                                    self.brand = brand
-                                    self.model = model
+
 
 
 
