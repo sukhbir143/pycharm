@@ -1125,4 +1125,8 @@ if __name__ == "__main__":
     test_suite = NovaTestSuite()
     test_suite.run_all_tests()
 
-    ok
+
+class Car:
+    def __int__(self, brand, model):
+        self.brand = brand
+        self.model = model
