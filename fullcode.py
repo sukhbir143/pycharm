@@ -38,6 +38,16 @@ with (sync_playwright() as p):
     Apply = page.wait_for_selector("//button[@class='btn btn-apply changeable-button apply_global_filter']")
     Apply.click()
 
+    Filter = page.wait_for_selector("//span[@class='Alt-din-font filter-class-btn']")
+    Filter.click()
+    financialyear = page.wait_for_selector('//input[@value="last_financial_year"]')
+    financialyear.click()
+    Apply = page.wait_for_selector("//button[@class='btn btn-apply changeable-button apply_global_filter']")
+    Apply.click()
+
+    Filter = page.wait_for_selector("//span[@class='Alt-din-font filter-class-btn']")
+    Filter.click()
+
     print("\n✅ Script completed! Browser will remain open.")
     print("Press Ctrl+C in terminal to close the browser.")
 
@@ -252,6 +262,28 @@ with (sync_playwright() as p):
                                 ['warnings'].append(f"Filter state unclear: {filter_text}")
                         except:
                             print("⚠️  Could not verify filter state")
+
+
+                            class Car:
+                                def __int__(self, brand ,model):
+                                    self.brand = brand
+                                    self.model = model
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
