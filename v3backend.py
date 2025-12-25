@@ -1124,3 +1124,5 @@ if __name__ == "__main__":
     # Run complete test suite
     test_suite = NovaTestSuite()
     test_suite.run_all_tests()
+
+    ok
