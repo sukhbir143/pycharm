@@ -1,12 +1,3 @@
-"""
-SingleInterface Backend Dashboard - Login Test Suite
-Automated test cases for login functionality
-
-Prerequisites:
-pip install pytest playwright pytest-html
-playwright install
-"""
-
 import pytest
 from playwright.sync_api import sync_playwright, Page, expect, Browser
 import time
@@ -376,3 +367,4 @@ if __name__ == "__main__":
         "--self-contained-html",
         "--tb=short"  # Shorter traceback format
     ])
+
