@@ -3,18 +3,10 @@ from playwright.sync_api import sync_playwright, Page, expect, Browser
 import time
 
 
-@pytest.fixture(scope="class")
-def page(playwright):
-    browser = playwright.chromium.launch(
-        headless=False,
-        args=["--ignore-certificate-errors"]
-    )
-    context = browser.new_context(ignore_https_errors=True)
-    page = context.new_page()
-    page.goto("https://backend-dashboard.singleinterface.com/pages/index.html")
-    yield page
-    browser.close()
+class TestSingleInterfaceLogin:
+    """Test suite for SingleInterface login functionality"""
 
+    BASE_URL = "https://backend-dashboard.singleinterface.com/pages/index.html"
 
     # Valid test credentials
     VALID_EMAIL = "sukhbir.deswal+supportadmin@singleinterface.com"
@@ -29,9 +21,7 @@ def page(playwright):
     def browser_context(self):
         """Setup browser context for each test"""
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True,
-                args=["--ignore-certificate-errors"]
-            )
+            browser = p.chromium.launch(headless=False, slow_mo=1000)
             context = browser.new_context()
             yield context, browser
             context.close()
