@@ -48,7 +48,7 @@ with (sync_playwright() as p):
     Filter = page.wait_for_selector("//span[@class='Alt-din-font filter-class-btn']")
     Filter.click()
 
-    print("\n✅ Script completed! Browser will remain open.")
+    print("\nScript completed! Browser will remain open.")
     print("Press Ctrl+C in terminal to close the browser.")
 
     input("Or press Enter here to close...")
@@ -57,7 +57,7 @@ with (sync_playwright() as p):
     # STEP 5: VERIFY WIDGETS
     # ====================
     print("\n" + "=" * 60)
-    print("🔍 WIDGET DATA VERIFICATION")
+    print("WIDGET DATA VERIFICATION")
     print("=" * 60)
 
     # Common widget selectors to check
@@ -87,13 +87,13 @@ with (sync_playwright() as p):
     # ====================
     # TEST 1: Check if widgets are visible
     # ====================
-    print("\n📋 Test 1: Checking widget visibility...")
+    print("\nTest 1: Checking widget visibility...")
 
     # Find all card/widget containers
     widget_containers = page.locator('.card, .widget, [class*="widget"], [class*="card"]').all()
 
     if len(widget_containers) > 0:
-        print(f"✅ Found {len(widget_containers)} widget containers")
+        print(f"Found {len(widget_containers)} widget containers")
         ['passed'].append(f"Widget visibility: {len(widget_containers)} widgets found")
     else:
         print("❌ No widget containers found!")
@@ -102,7 +102,7 @@ with (sync_playwright() as p):
         # ====================
         # TEST 2: Verify data in numeric widgets
         # ====================
-        print("\n🔢 Test 2: Verifying numeric data...")
+        print("\nTest 2: Verifying numeric data...")
 
         # Look for elements with numbers
         numeric_elements = page.locator(
@@ -122,12 +122,12 @@ with (sync_playwright() as p):
                         widgets_with_data += 1
                         print(f"  ✅ Widget {i + 1}: {text}")
                     else:
-                        print(f"  ⚠️  Widget {i + 1}: {text} (no numeric data)")
+                        print(f"Widget {i + 1}: {text} (no numeric data)")
                 else:
                     empty_widgets += 1
                     print(f"  ❌ Widget {i + 1}: Empty or zero value")
             except:
-                print(f"  ⚠️  Widget {i + 1}: Could not read data")
+                print(f"Widget {i + 1}: Could not read data")
 
         if widgets_with_data > 0:
             ['passed'].append(f"Numeric data: {widgets_with_data} widgets have data")
@@ -137,12 +137,12 @@ with (sync_playwright() as p):
             # ====================
             # TEST 3: Verify charts are rendered
             # ====================
-            print("\n📊 Test 3: Verifying charts...")
+            print("\nTest 3: Verifying charts...")
 
             charts = page.locator('canvas, svg, [class*="chart"]').all()
 
             if len(charts) > 0:
-                print(f"✅ Found {len(charts)} chart elements")
+                print(f"Found {len(charts)} chart elements")
                 ['passed'].append(f"Charts: {len(charts)} charts found")
 
                 # Check if charts have data
@@ -157,37 +157,37 @@ with (sync_playwright() as p):
                                            return !imageData.data.some(channel => channel !== 0);
                                        }''')
                             if not is_empty:
-                                print(f"  ✅ Chart {i + 1}: Has rendered data")
+                                print(f"Chart {i + 1}: Has rendered data")
                             else:
-                                print(f"  ⚠️  Chart {i + 1}: Appears empty")
+                                print(f"Chart {i + 1}: Appears empty")
                     except:
-                        print(f"  ⚠️  Chart {i + 1}: Could not verify")
+                        print(f"Chart {i + 1}: Could not verify")
             else:
-                print("⚠️  No charts found")
+                print("No charts found")
                 ['warnings'].append("Charts: No chart elements found")
                 # ====================
                 # TEST 4: Check for loading indicators (should be gone)
                 # ====================
-                print("\n⏳ Test 4: Checking for loading indicators...")
+                print("\nTest 4: Checking for loading indicators...")
 
                 loading_indicators = page.locator('[class*="loading"], [class*="spinner"], .loader').all()
 
                 if len(loading_indicators) == 0:
-                    print("✅ No loading indicators present (data loaded)")
+                    print("No loading indicators present (data loaded)")
                     ['passed'].append("Loading state: Data fully loaded")
                 else:
                     visible_loaders = sum(1 for loader in loading_indicators if loader.is_visible())
                     if visible_loaders > 0:
-                        print(f"⚠️  {visible_loaders} loading indicators still visible")
+                        print(f"{visible_loaders} loading indicators still visible")
                         ['warnings'].append(f"Loading state: {visible_loaders} loaders still visible")
                     else:
-                        print("✅ Loading indicators hidden")
+                        print("Loading indicators hidden")
                         ['passed'].append("Loading state: Data fully loaded")
 
                         # ====================
                         # TEST 5: Check for error messages
                         # ====================
-                        print("\n❌ Test 5: Checking for error messages...")
+                        print("\nTest 5: Checking for error messages...")
 
                         error_selectors = [
                             '[class*="error"]',
@@ -205,17 +205,17 @@ with (sync_playwright() as p):
                                 errors_found = True
                                 for error in visible_errors:
                                     error_text = error.inner_text()
-                                    print(f"  ❌ Error found: {error_text}")
+                                    print(f"Error found: {error_text}")
                                     ['failed'].append(f"Error message: {error_text}")
 
                         if not errors_found:
-                            print("✅ No error messages found")
+                            print("No error messages found")
                             ['passed'].append("Error check: No errors displayed")
 
                         # ====================
                         # TEST 6: Verify specific widget types
                         # ====================
-                        print("\n📈 Test 6: Verifying specific widget types...")
+                        print("\nTest 6: Verifying specific widget types...")
 
                         # Check for common review dashboard widgets
                         widget_checks = {
@@ -236,18 +236,18 @@ with (sync_playwright() as p):
                                     # Check if has numeric data
                                     has_data = bool(re.search(r'\d', widget_text))
                                     if has_data:
-                                        print(f"  ✅ {widget_name}: Data present")
+                                        print(f"{widget_name}: Data present")
                                         ['passed'].append(f"{widget_name}: Has data")
                                     else:
-                                        print(f"  ⚠️  {widget_name}: No numeric data")
+                                        print(f"{widget_name}: No numeric data")
                                         ['warnings'].append(f"{widget_name}: No data")
                             except:
-                                print(f"  ⚠️  {widget_name}: Not found or not accessible")
+                                print(f"{widget_name}: Not found or not accessible")
 
                         # ====================
                         # TEST 7: Verify filter is applied (check UI)
                         # ====================
-                        print("\n✓ Test 7: Verifying filter application...")
+                        print("\nTest 7: Verifying filter application...")
 
                         try:
                             # Check if the filter button shows the selected filter
@@ -255,13 +255,13 @@ with (sync_playwright() as p):
                             filter_text = filter_button.inner_text()
 
                             if 'last week' in filter_text.lower() or 'week' in filter_text.lower():
-                                print(f"✅ Filter applied: {filter_text}")
+                                print(f"Filter applied: {filter_text}")
                                 ['passed'].append(f"Filter state: {filter_text}")
                             else:
-                                print(f"⚠️  Filter text: {filter_text}")
+                                print(f"Filter text: {filter_text}")
                                 ['warnings'].append(f"Filter state unclear: {filter_text}")
                         except:
-                            print("⚠️  Could not verify filter state")
+                            print("Could not verify filter state")
 
 
                             class Car:
