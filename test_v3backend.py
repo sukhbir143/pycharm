@@ -6,7 +6,7 @@ import time
 @pytest.fixture(scope="class")
 def page(playwright):
     browser = playwright.chromium.launch(
-        headless=True,
+        headless=False,
         args=["--ignore-certificate-errors"]
     )
     context = browser.new_context(ignore_https_errors=True)
