@@ -3,10 +3,18 @@ from playwright.sync_api import sync_playwright, Page, expect, Browser
 import time
 
 
-class TestSingleInterfaceLogin:
-    """Test suite for SingleInterface login functionality"""
+@pytest.fixture(scope="class")
+def page(playwright):
+    browser = playwright.chromium.launch(
+        headless=True,
+        args=["--ignore-certificate-errors"]
+    )
+    context = browser.new_context(ignore_https_errors=True)
+    page = context.new_page()
+    page.goto("https://backend-dashboard.singleinterface.com/pages/index.html")
+    yield page
+    browser.close()
 
-    BASE_URL = "https://backend-dashboard.singleinterface.com/pages/index.html"
 
     # Valid test credentials
     VALID_EMAIL = "sukhbir.deswal+supportadmin@singleinterface.com"
@@ -21,7 +29,9 @@ class TestSingleInterfaceLogin:
     def browser_context(self):
         """Setup browser context for each test"""
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=False, slow_mo=1000)
+            browser = p.chromium.launch(headless=True,
+                args=["--ignore-certificate-errors"]
+            )
             context = browser.new_context()
             yield context, browser
             context.close()
@@ -39,7 +49,7 @@ class TestSingleInterfaceLogin:
     # Test Case 1: Successful login with valid credentials
     def test_01_successful_login_valid_credentials(self, page: Page):
         """TC-01: Login with valid email and password"""
-        print("\n🧪 Test Case 1: Successful Login with Valid Credentials")
+        print("\nTest Case 1: Successful Login with Valid Credentials")
 
         # Enter valid credentials
         email_field = page.wait_for_selector(self.EMAIL_SELECTOR, timeout=5000)
@@ -64,7 +74,7 @@ class TestSingleInterfaceLogin:
     # Test Case 2: Login fails with invalid email
     def test_02_login_fails_invalid_email(self, page: Page):
         """TC-02: Login attempt with invalid email"""
-        print("\n🧪 Test Case 2: Login Fails with Invalid Email")
+        print("\nTest Case 2: Login Fails with Invalid Email")
 
         # Enter invalid email
         email_field = page.wait_for_selector(self.EMAIL_SELECTOR, timeout=5000)
@@ -94,7 +104,7 @@ class TestSingleInterfaceLogin:
     # Test Case 3: Login fails with invalid password
     def test_03_login_fails_invalid_password(self, page: Page):
         """TC-03: Login attempt with invalid password"""
-        print("\n🧪 Test Case 3: Login Fails with Invalid Password")
+        print("\nTest Case 3: Login Fails with Invalid Password")
 
         # Enter valid email but wrong password
         email_field = page.wait_for_selector(self.EMAIL_SELECTOR, timeout=5000)
@@ -122,7 +132,7 @@ class TestSingleInterfaceLogin:
     # Test Case 4: Login with empty email field
     def test_04_empty_email_validation(self, page: Page):
         """TC-04: Submit form with empty email field"""
-        print("\n🧪 Test Case 4: Empty Email Field Validation")
+        print("\nTest Case 4: Empty Email Field Validation")
 
         # Leave email empty, fill password
         password_field = page.wait_for_selector(self.PASSWORD_SELECTOR, timeout=5000)
@@ -151,7 +161,7 @@ class TestSingleInterfaceLogin:
     # Test Case 5: Login with empty password field
     def test_05_empty_password_validation(self, page: Page):
         """TC-05: Submit form with empty password field"""
-        print("\n🧪 Test Case 5: Empty Password Field Validation")
+        print("\nTest Case 5: Empty Password Field Validation")
 
         # Fill email, leave password empty
         email_field = page.wait_for_selector(self.EMAIL_SELECTOR, timeout=5000)
@@ -177,7 +187,7 @@ class TestSingleInterfaceLogin:
     # Test Case 6: Login with both fields empty
     def test_06_both_fields_empty(self, page: Page):
         """TC-06: Submit form with both fields empty"""
-        print("\n🧪 Test Case 6: Both Fields Empty Validation")
+        print("\nTest Case 6: Both Fields Empty Validation")
 
         # Click sign-in button without filling any field
         signin_button = page.wait_for_selector(self.SIGNIN_BUTTON_SELECTOR, timeout=5000)
@@ -194,7 +204,7 @@ class TestSingleInterfaceLogin:
     # Test Case 7: Email field accepts only valid email format
     def test_07_invalid_email_format(self, page: Page):
         """TC-07: Test with invalid email format"""
-        print("\n🧪 Test Case 7: Invalid Email Format Validation")
+        print("\nTest Case 7: Invalid Email Format Validation")
 
         # Enter invalid email format
         email_field = page.wait_for_selector(self.EMAIL_SELECTOR, timeout=5000)
@@ -223,7 +233,7 @@ class TestSingleInterfaceLogin:
     # Test Case 8: Verify password field masks input
     def test_08_password_field_masking(self, page: Page):
         """TC-08: Verify password field masks the input"""
-        print("\n🧪 Test Case 8: Password Field Masking")
+        print("\nTest Case 8: Password Field Masking")
 
         # Check password field type
         password_field = page.wait_for_selector(self.PASSWORD_SELECTOR, timeout=5000)
@@ -238,7 +248,7 @@ class TestSingleInterfaceLogin:
     # Test Case 9: Sign-in button is clickable
     def test_09_signin_button_clickable(self, page: Page):
         """TC-09: Verify sign-in button is enabled and clickable"""
-        print("\n🧪 Test Case 9: Sign-in Button Clickability")
+        print("\nTest Case 9: Sign-in Button Clickability")
 
         # Locate sign-in button
         signin_button = page.wait_for_selector(self.SIGNIN_BUTTON_SELECTOR, timeout=5000)
@@ -256,7 +266,7 @@ class TestSingleInterfaceLogin:
     # Test Case 10: Page elements load correctly
     def test_10_page_elements_load(self, page: Page):
         """TC-10: Verify all login form elements are present"""
-        print("\n🧪 Test Case 10: Page Elements Load Verification")
+        print("\nTest Case 10: Page Elements Load Verification")
 
         # Check email field exists
         email_field = page.wait_for_selector(self.EMAIL_SELECTOR, timeout=5000)
@@ -312,7 +322,7 @@ class TestSingleInterfaceLoginAdvanced:
     # Bonus Test Case 11: SQL Injection prevention
     def test_11_sql_injection_prevention(self, page: Page):
         """TC-11: Test SQL injection attempt in email field"""
-        print("\n🧪 Test Case 11: SQL Injection Prevention")
+        print("\nTest Case 11: SQL Injection Prevention")
 
         # Try SQL injection
         email_field = page.wait_for_selector(self.EMAIL_SELECTOR, timeout=5000)
@@ -335,7 +345,7 @@ class TestSingleInterfaceLoginAdvanced:
     # Bonus Test Case 12: XSS prevention
     def test_12_xss_prevention(self, page: Page):
         """TC-12: Test XSS script injection"""
-        print("\n🧪 Test Case 12: XSS Prevention")
+        print("\nTest Case 12: XSS Prevention")
 
         # Try XSS attack
         email_field = page.wait_for_selector(self.EMAIL_SELECTOR, timeout=5000)
