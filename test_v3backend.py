@@ -53,13 +53,16 @@ class TestSingleInterfaceLogin:
         signin_button.click()
 
         # Wait for navigation or dashboard element
-        time.sleep(3)
+        time.sleep(9)
 
-        # Verify URL changed (redirected to dashboard)
-        current_url = page.url
-        assert current_url != self.BASE_URL, "Should redirect after successful login"
+        user_badge = page.wait_for_selector(
+            '//span[contains(@class,"user-badge")]',
+            timeout=10000
+        )
 
-        print("✅ Test Passed: Successfully logged in and redirected")
+        assert user_badge.is_visible(), "Login failed: Dashboard not loaded"
+
+        print("✅ Login successful – dashboard visible")
 
     # Test Case 2: Login fails with invalid email
     def test_02_login_fails_invalid_email(self, page: Page):
