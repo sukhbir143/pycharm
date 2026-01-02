@@ -2,7 +2,7 @@ from playwright.sync_api import sync_playwright
 import time
 
 with (sync_playwright() as p):
-    browser = p.chromium.launch(headless=False, slow_mo=2000)
+    browser = p.chromium.launch(headless=False, slow_mo=5000)
     page = browser.new_page()
     # ====================
     # STEP 1: LOGIN
