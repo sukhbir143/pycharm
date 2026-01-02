@@ -51,7 +51,8 @@ with (sync_playwright() as p):
     print("\nScript completed! Browser will remain open.")
     print("Press Ctrl+C in terminal to close the browser.")
 
-    input("Or press Enter here to close...")
+    if not os.getenv("CI"):
+        input("Or press Enter here to close...")
 
     # ====================
     # STEP 5: VERIFY WIDGETS
