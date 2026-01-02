@@ -50,10 +50,7 @@ with (sync_playwright() as p):
 
     print("\nScript completed! Browser will remain open.")
     print("Press Ctrl+C in terminal to close the browser.")
-    import os
 
-    if not os.getenv("CI"):
-        input("Or press Enter here to close...")
 
     # ====================
     # STEP 5: VERIFY WIDGETS
@@ -266,10 +263,7 @@ with (sync_playwright() as p):
                             print("Could not verify filter state")
 
 
-                            class Car:
-                                def __int__(self, brand ,model):
-                                    self.brand = brand
-                                    self.model = model
+
 
 
 
