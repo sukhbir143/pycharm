@@ -93,6 +93,10 @@ with (sync_playwright() as p):
         page.click("text=Export Data")
     download.value.save_as("file.pdf")
 
+    # reviewAI
+    Reviewdashboard = page.wait_for_selector("//span[normalize-space()='Reviews AI']")
+    Reviewdashboard.click()
+
 
 
 
