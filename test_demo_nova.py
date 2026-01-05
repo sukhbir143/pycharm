@@ -97,6 +97,10 @@ with (sync_playwright() as p):
     Reviewdashboard = page.wait_for_selector("//span[normalize-space()='Reviews AI']")
     Reviewdashboard.click()
 
+    # Filter
+    filter = page.wait_for_selector("//button[@id='filter-dropdown']")
+    filter.click()
+
 
 
 
