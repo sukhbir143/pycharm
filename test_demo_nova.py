@@ -21,7 +21,7 @@ with (sync_playwright() as p):
     searchbrand = page.wait_for_selector("//input[@placeholder='Search by name or address...']")
     searchbrand.click()
 
-    #select brand form list
+    # select brand form list
     slebrand = page.wait_for_selector("body > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > main:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > button:nth-child(1)")
     slebrand.click()
 
@@ -100,6 +100,24 @@ with (sync_playwright() as p):
     # Filter
     filter = page.wait_for_selector("//button[@id='filter-dropdown']")
     filter.click()
+
+    #applyfilter
+    applyfilter = page.wait_for_selector("//button[normalize-space()='Apply Filters']")
+    applyfilter.click()
+
+    # Filter
+    filter = page.wait_for_selector("//button[@id='filter-dropdown']")
+    filter.click()
+
+    #reset
+    reset = page.wait_for_selector("//span[normalize-space()='Reset']")
+    reset.click()
+
+    # applyfilter
+    applyfilter = page.wait_for_selector("//button[normalize-space()='Apply Filters']")
+    applyfilter.click()
+
+
 
 
 
