@@ -28,4 +28,4 @@ def test_serp_api_response_schema():
     data = response.json()
 
     assert "search_metadata" in data
-    assert "place_results" in data
+    assert "place_results" in datas
