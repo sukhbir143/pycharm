@@ -6,12 +6,9 @@ with (sync_playwright() as p):
     page = browser.new_page()
     # login in demo
     page.goto('https://demo-nova.singleinterface.com/login')
-    email = page.wait_for_selector("//input[@placeholder='Enter your email']")
-    email.type("super_admin_hdfcLife@singleinterface.com")
-    password = page.wait_for_selector("//input[@placeholder='Enter your password']")
-    password.type("password123")
-    signin = page.wait_for_selector("//button[normalize-space()='Sign In']")
-    signin.click()
+    page.get_by_placeholder("Enter your email").fill("super_admin_hdfcLife@singleinterface.com")
+    page.get_by_placeholder("Enter your password").fill("password123")
+    page.locator("//button[normalize-space()='Sign In']").click()
 
 
     # competitor ai dashboard
@@ -34,7 +31,7 @@ with (sync_playwright() as p):
     editbutton.click()
 
     # Edit Business Location
-    searchbrand = page.wait_for_selector("//input[@id='location-search']")
+    page.locator("#location-search").wait_for(state="visible", timeout=60000)
     searchbrand.type("tata motors")
 
     sellocation = page.wait_for_selector("body > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > main:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > button:nth-child(1) > div:nth-child(1) > p:nth-child(2)")
@@ -116,6 +113,9 @@ with (sync_playwright() as p):
     # applyfilter
     applyfilter = page.wait_for_selector("//button[normalize-space()='Apply Filters']")
     applyfilter.click()
+
+
+
 
 
 

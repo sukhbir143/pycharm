@@ -80,6 +80,7 @@ class TestSingleInterfaceLogin:
         signin_button = page.wait_for_selector(self.SIGNIN_BUTTON_SELECTOR, timeout=5000)
         signin_button.click()
 
+
         time.sleep(2)
 
         # Verify still on login page or error message appears
